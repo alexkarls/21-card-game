@@ -1,14 +1,27 @@
 import model.Card;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CardTest {
 
+    @AfterEach
+    void teardown(TestInfo testInfo) {
+        System.out.println("Done with test: " + testInfo.getDisplayName());
+    }
+
     @Test
-    public void createCardsTest() {
+    public void createCardTest() {
         Card sut = new Card(Card.Suit.CLUBS, Card.Rank.TWO);
         assertEquals(sut.getSuit(), Card.Suit.CLUBS);
         assertEquals(sut.getRank(), Card.Rank.TWO);
+    }
+
+    @Test
+    void equalsCardTest() {
+        assertTrue(new Card(Card.Suit.CLUBS, Card.Rank.TWO).equals(new Card(Card.Suit.CLUBS, Card.Rank.TWO)));
+        assertFalse(new Card(Card.Suit.CLUBS, Card.Rank.TWO).equals(new Card(Card.Suit.CLUBS, Card.Rank.THREE)));
     }
 }

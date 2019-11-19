@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Set;
-
 public class Card {
 
     private Suit suit;
@@ -43,4 +41,9 @@ public class Card {
         ACE
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Card other = (Card) obj;
+        return suit == other.suit && rank == other.rank;
+    }
 }

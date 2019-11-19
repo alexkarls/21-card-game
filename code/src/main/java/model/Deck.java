@@ -23,13 +23,20 @@ public class Deck {
         }
     }
 
-    public void shuffle() {
-    }
-
-    public Card getCard() {
+    public Card draw() {
         Card c = deck.get(0);
         deck.remove(0);
         return c;
+    }
+
+    // Fisher-Yates shuffle
+    public void shuffle() {
+        for (int i = deck.size() - 1; i >= 0; i--) {
+            int randomIndex = random.nextInt(i + 1);
+            Card temp = deck.get(i);
+            deck.set(i, deck.get(randomIndex));
+            deck.set(randomIndex, temp);
+        }
     }
 
     public int size() {
@@ -38,6 +45,17 @@ public class Deck {
 
     @Override
     public boolean equals(Object obj) {
-        return false;
+        Deck other = (Deck) obj;
+        if (other.size() != size()) {
+            return false;
+        }
+        for (int i = 0; i < size(); i++) {
+            Card card = deck.get(i);
+            Card otherCard = other.deck.get(i);
+            if (card.equals(otherCard) == false) {
+                return false;
+            }
+        }
+        return true;
     }
 }
