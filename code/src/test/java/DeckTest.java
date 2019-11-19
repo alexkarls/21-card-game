@@ -28,13 +28,13 @@ public class DeckTest {
 
     @Test
     void createDeckTest() {
-        assertEquals(sut.size(), DECK_SIZE);
+        assertEquals(DECK_SIZE, sut.size());
         for (Card.Suit suit : Card.Suit.values()) {
             for (Card.Rank rank : Card.Rank.values()) {
                 assertTrue(sut.draw().equals(new Card(suit, rank)));
             }
         }
-        assertEquals(sut.size(), 0);
+        assertEquals(0, sut.size());
     }
 
     @Test
@@ -59,7 +59,8 @@ public class DeckTest {
             sut.shuffle();
             assertFalse(sut.equals(deckInOrder));
         }
-        assertTrue(containsUniqueCards(sut));
+        assertEquals(DECK_SIZE, sut.size()); // Make sure no removal
+        assertTrue(containsUniqueCards(sut)); // Make sure no duplicates
     }
 
     @Test
@@ -69,7 +70,6 @@ public class DeckTest {
         assertFalse(sut.equals(new Deck(new Random())));
     }
 
-    @Test
     private boolean containsUniqueCards(Deck deck) {
         List<Card> cards = new LinkedList<Card>();
         while (deck.size() > 0) {

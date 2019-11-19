@@ -15,8 +15,8 @@ public class CardTest {
     @Test
     public void createCardTest() {
         Card sut = new Card(Card.Suit.CLUBS, Card.Rank.TWO);
-        assertEquals(sut.getSuit(), Card.Suit.CLUBS);
-        assertEquals(sut.getRank(), Card.Rank.TWO);
+        assertEquals(Card.Suit.CLUBS, sut.getSuit());
+        assertEquals(Card.Rank.TWO, sut.getRank());
     }
 
     @Test
