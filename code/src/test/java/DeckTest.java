@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DeckTest {
 
-    private final int DECK_SIZE = 52;
+    protected final int DECK_SIZE = new Deck(new Random()).size();
     private Deck sut;
 
     @BeforeEach
@@ -84,18 +84,19 @@ public class DeckTest {
         return true;
     }
 
-    class MockRandom extends Random {
+}
 
-        private int value = DECK_SIZE;
+class MockRandom extends Random {
 
-        MockRandom() {
-            super();
-        }
+    private int value = new Deck(new Random()).size();
 
-        @Override
-        public int nextInt(int v) {
-            value--; // Increment down with each card (swap card with same card)
-            return value;
-        }
+    MockRandom() {
+        super();
+    }
+
+    @Override
+    public int nextInt(int v) {
+        value--; // Increment down with each card (swap card with same card)
+        return value;
     }
 }
