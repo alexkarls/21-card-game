@@ -1,31 +1,33 @@
 package model;
 
+import java.util.Set;
+
 public class Card {
 
-    private Color color;
-    private Value value;
+    private Suit suit;
+    private Rank rank;
 
-    public Card(Color color, Value value) {
-        this.color = color;
-        this.value = value;
+    public Card(Suit suit, Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
-    public Color getColor() {
-        return color;
+    public Suit getSuit() {
+        return suit;
     }
 
-    public Value getValue() {
-        return value;
+    public Rank getRank() {
+        return rank;
     }
 
-    public enum Color {
+    public enum Suit {
         CLUBS,
         DIAMONDS,
         HEARTS,
         SPADES,
     }
 
-    public enum Value {
+    public enum Rank {
         TWO,
         THREE,
         FOUR,

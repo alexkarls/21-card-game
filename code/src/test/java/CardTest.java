@@ -7,8 +7,8 @@ public class CardTest {
 
     @Test
     public void createCardsTest() {
-        Card sut = new Card(Card.Color.CLUBS, Card.Value.TWO);
-        assertEquals(sut.getColor(), Card.Color.CLUBS);
-        assertEquals(sut.getValue(), Card.Value.TWO);
+        Card sut = new Card(Card.Suit.CLUBS, Card.Rank.TWO);
+        assertEquals(sut.getSuit(), Card.Suit.CLUBS);
+        assertEquals(sut.getRank(), Card.Rank.TWO);
     }
 }

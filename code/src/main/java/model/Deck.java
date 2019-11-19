@@ -13,9 +13,9 @@ public class Deck {
     }
 
     private void build() {
-        for (Card.Color color : Card.Color.values()) {
-            for (Card.Value value : Card.Value.values()) {
-                deck.add(new Card(color, value));
+        for (Card.Suit suit : Card.Suit.values()) {
+            for (Card.Rank rank : Card.Rank.values()) {
+                deck.add(new Card(suit, rank));
             }
         }
     }

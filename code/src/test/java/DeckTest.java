@@ -16,19 +16,15 @@ public class DeckTest {
     }
 
     @Test
-    void createDeckSizeTest() {
+    void createDeckTest() {
         assertEquals(sut.size(), DECK_SIZE);
-    }
-
-    @Test
-    void createDeckCardTest() {
-        for (Card.Color color : Card.Color.values()) {
-            for (Card.Value value : Card.Value.values()) {
+        for (Card.Suit suit : Card.Suit.values()) {
+            for (Card.Rank rank : Card.Rank.values()) {
                 Card c = sut.getCard();
-                assertEquals(c.getColor(), color);
-                assertEquals(c.getValue(), value);
+                assertEquals(c.getSuit(), suit);
+                assertEquals(c.getRank(), rank);
             }
         }
+        assertEquals(sut.size(), 0);
     }
-
 }
