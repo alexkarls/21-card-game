@@ -2,12 +2,15 @@ package model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class Deck {
 
     List<Card> deck;
+    Random random;
 
-    public Deck() {
+    public Deck(Random random) {
+        this.random  = random;
         deck = new LinkedList<Card>();
         build();
     }
@@ -20,6 +23,9 @@ public class Deck {
         }
     }
 
+    public void shuffle() {
+    }
+
     public Card getCard() {
         Card c = deck.get(0);
         deck.remove(0);
@@ -28,5 +34,10 @@ public class Deck {
 
     public int size() {
         return deck.size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return false;
     }
 }
