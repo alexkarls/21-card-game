@@ -10,16 +10,20 @@ public class Card {
         TWO
     }
 
-    public Card(Color color, Value value) {
+    private Color color;
+    private Value value;
 
+    public Card(Color color, Value value) {
+        this.color = color;
+        this.value = value;
     }
 
     public Color getColor() {
-        return Color.CLUBS;
+        return color;
     }
 
     public Value getValue() {
-        return Value.TWO;
+        return value;
     }
 
 }
