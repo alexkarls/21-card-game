@@ -1,4 +1,5 @@
 import model.Card;
+import model.Deck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ public class DeckTest {
 
     @Test
     void createDeckSizeTest() {
-        assertEquals(sut.size, DECK_SIZE);
+        assertEquals(sut.size(), DECK_SIZE);
     }
 
     @Test
@@ -24,8 +25,8 @@ public class DeckTest {
         for (Card.Color color : Card.Color.values()) {
             for (Card.Value value : Card.Value.values()) {
                 Card c = sut.getCard();
-                assertEquals(c.getColor, color);
-                assertEquals(c.getValue, value);
+                assertEquals(c.getColor(), color);
+                assertEquals(c.getValue(), value);
             }
         }
     }

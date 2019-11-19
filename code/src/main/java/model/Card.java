@@ -2,14 +2,6 @@ package model;
 
 public class Card {
 
-    public enum Color {
-        CLUBS
-    }
-
-    public enum Value {
-        TWO
-    }
-
     private Color color;
     private Value value;
 
@@ -24,6 +16,29 @@ public class Card {
 
     public Value getValue() {
         return value;
+    }
+
+    public enum Color {
+        CLUBS,
+        DIAMONDS,
+        HEARTS,
+        SPADES,
+    }
+
+    public enum Value {
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT,
+        NINE,
+        TEN,
+        JACK,
+        QUEEN,
+        KING,
+        ACE
     }
 
 }
