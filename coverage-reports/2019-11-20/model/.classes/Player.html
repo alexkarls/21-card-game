@@ -1,0 +1,126 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Player</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Player (model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Player</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/ 19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.LinkedList;
+<i>4</i>&nbsp;import java.util.List;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;public class Player {
+<i>7</i>&nbsp;
+<b class="fc"><i>8</i>&nbsp;    private final int MAX_SCORE = 21;</b>
+<b class="fc"><i>9</i>&nbsp;    private final int CARD_VALUE_OFFSET = 2;</b>
+<i>10</i>&nbsp;    List&lt;Card&gt; hand;
+<i>11</i>&nbsp;
+<b class="fc"><i>12</i>&nbsp;    public Player() {</b>
+<b class="fc"><i>13</i>&nbsp;        hand = new LinkedList&lt;Card&gt;();</b>
+<b class="fc"><i>14</i>&nbsp;    }</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public void add(Card c) {
+<b class="fc"><i>17</i>&nbsp;        hand.add(c);</b>
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    public Iterable&lt;Card&gt; getHand() {
+<b class="fc"><i>21</i>&nbsp;        return hand;</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    public int getScore() {
+<b class="fc"><i>25</i>&nbsp;        int score = 0;</b>
+<b class="fc"><i>26</i>&nbsp;        for (Card c : hand) {</b>
+<b class="fc"><i>27</i>&nbsp;            score = score + c.getRank().ordinal() + CARD_VALUE_OFFSET;</b>
+<b class="fc"><i>28</i>&nbsp;        }</b>
+<b class="fc"><i>29</i>&nbsp;        if (score &gt; MAX_SCORE) {</b>
+<b class="fc"><i>30</i>&nbsp;            for (Card c : hand) {</b>
+<b class="fc"><i>31</i>&nbsp;                if (c.getRank() == Card.Rank.ACE &amp;&amp; score &gt; MAX_SCORE) {</b>
+<b class="fc"><i>32</i>&nbsp;                    score = score - (c.getRank().ordinal() + (CARD_VALUE_OFFSET - 1));</b>
+<i>33</i>&nbsp;                }
+<b class="fc"><i>34</i>&nbsp;            }</b>
+<i>35</i>&nbsp;        }
+<b class="fc"><i>36</i>&nbsp;        return score;</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public int size() {
+<b class="fc"><i>40</i>&nbsp;        return hand.size();</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-11-20 21:50</div>
+</div>
+</body>
+</html>
