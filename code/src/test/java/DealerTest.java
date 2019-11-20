@@ -1,4 +1,5 @@
 import model.Card;
+import model.Dealer;
 import model.Player;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
