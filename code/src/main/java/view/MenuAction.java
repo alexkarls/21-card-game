@@ -1,7 +1,17 @@
 package view;
 
-public enum  MenuAction {
+public enum MenuAction {
 
-    PLAY,
-    EXIT
+    PLAY("Play 21"),
+    EXIT("Exit");
+
+    private final String TEXT;
+
+    MenuAction(String TEXT) {
+        this.TEXT = TEXT;
+    }
+
+    public String toString() {
+        return TEXT;
+    }
 }

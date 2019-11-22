@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MenuViewTest {
 
     MenuView sut;
-    private final int INDEX_OFFSET = 1;
     private ByteArrayOutputStream out;
 
     @BeforeEach
@@ -31,7 +30,7 @@ public class MenuViewTest {
 
     @Test
     void menuViewGetInputActionTest() {
-        String in = Integer.toString(MenuAction.EXIT.ordinal() + INDEX_OFFSET);
+        String in = Integer.toString(MenuAction.EXIT.ordinal());
         System.setIn(new ByteArrayInputStream(in.getBytes()));
         assertEquals(MenuAction.EXIT, sut.getInputAction());
     }
@@ -45,7 +44,6 @@ public class MenuViewTest {
         }
         assertEquals(expected, out.toString());
     }
-
 }
 
 
