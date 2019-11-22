@@ -8,6 +8,13 @@ public class ControllerFactory {
     }
 
     public IController getController(Controller controller) {
-        return null;
+        if (controller == null) {
+            throw new IllegalArgumentException();
+        }
+        switch (controller) {
+            case MENU: return new MenuController(null, null);
+            case GAME: return new GameController(null, null);
+            default: throw new IllegalArgumentException();
+        }
     }
 }
