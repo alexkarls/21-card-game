@@ -8,13 +8,16 @@ import view.MenuView;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.InputMismatchException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MenuViewTest {
 
     MenuView sut;
     private ByteArrayOutputStream out;
+    private final int INDEX_OFFSET = 1;
 
     @BeforeEach
     void setup() {
@@ -30,9 +33,26 @@ public class MenuViewTest {
 
     @Test
     void menuViewGetInputActionTest() {
-        String in = Integer.toString(MenuAction.EXIT.ordinal());
+        for (MenuAction action : MenuAction.values()) {
+            int in = action.ordinal() + INDEX_OFFSET;
+            System.setIn(new ByteArrayInputStream(Integer.toString(in).getBytes()));
+            assertEquals(action, sut.getInputAction());
+        }
+    }
+
+    @Test
+    void menuViewGetInputActionReturnNullOnStringTest() {
+        String in = "a";
         System.setIn(new ByteArrayInputStream(in.getBytes()));
-        assertEquals(MenuAction.EXIT, sut.getInputAction());
+        assertEquals(null, sut.getInputAction());
+    }
+
+    @Test
+    void menuViewGetInputActionReturnNullOnInvalidIntegerTest() {
+        int in = MenuAction.values()[MenuAction.values().length - 1].ordinal();
+        in = in +  INDEX_OFFSET + 1;
+        System.setIn(new ByteArrayInputStream(Integer.toString(in).getBytes()));
+        assertEquals(null, sut.getInputAction());
     }
 
     @Test
@@ -40,7 +60,7 @@ public class MenuViewTest {
         sut.displayMenu();
         String expected = "";
         for (MenuAction action : MenuAction.values()) {
-            expected = expected + (action.ordinal() + 1) + ": " + action + System.lineSeparator();
+            expected = expected + (action.ordinal() + INDEX_OFFSET) + ": " + action + System.lineSeparator();
         }
         assertEquals(expected, out.toString());
     }
