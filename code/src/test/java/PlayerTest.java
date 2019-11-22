@@ -25,7 +25,7 @@ public class PlayerTest {
     }
 
     @Test
-    void addCardPlayerTest() {
+    void playerAddCardTest() {
         Card[] cards = new Card[]{new Card(Card.Suit.CLUBS, Card.Rank.TWO),
                 new Card(Card.Suit.HEARTS, Card.Rank.ACE),
                 new Card(Card.Suit.SPADES, Card.Rank.ACE)};
@@ -40,7 +40,7 @@ public class PlayerTest {
     }
 
     @Test
-    void handScorePlayerTest() {
+    void playerHandScoreTest() {
         sut.add(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
         assertEquals(2, sut.getScore());
         sut.add(new Card(Card.Suit.HEARTS, Card.Rank.ACE));
@@ -51,11 +51,10 @@ public class PlayerTest {
          */
         sut.add(new Card(Card.Suit.SPADES, Card.Rank.ACE));
         assertEquals(17, sut.getScore());
-
     }
 
     @Test
-    void handSizePlayerTest() {
+    void playerHandSizeTest() {
         Deck deck = new Deck(new MockRandom());
         sut.add(deck.draw());
         assertEquals(1, sut.size());

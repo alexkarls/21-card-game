@@ -27,7 +27,7 @@ public class DeckTest {
     }
 
     @Test
-    void createDeckTest() {
+    void deckCreateTest() {
         assertEquals(DECK_SIZE, sut.size());
         for (Card.Suit suit : Card.Suit.values()) {
             for (Card.Rank rank : Card.Rank.values()) {
@@ -38,7 +38,7 @@ public class DeckTest {
     }
 
     @Test
-    void drawDeckTest() {
+    void deckDrawTest() {
         sut = new Deck(new MockRandom());
         sut.shuffle();
         Card c = sut.draw();
@@ -50,7 +50,7 @@ public class DeckTest {
     }
 
     @Test
-    void shuffleDeckTest() {
+    void deckShuffleTest() {
         Deck deckInOrder = new Deck(new MockRandom());
         deckInOrder.shuffle();
         assertTrue(sut.equals(deckInOrder));
@@ -64,9 +64,16 @@ public class DeckTest {
     }
 
     @Test
-    void equalsDeckTest() {
+    void deckEqualCardsTest() {
         assertTrue(sut.equals(new Deck(new Random())));
         sut.shuffle();
+        assertFalse(sut.equals(new Deck(new Random())));
+    }
+
+    @Test
+    void deckEqualSizeTest() {
+        assertTrue(sut.equals(new Deck(new Random())));
+        sut.draw();
         assertFalse(sut.equals(new Deck(new Random())));
     }
 

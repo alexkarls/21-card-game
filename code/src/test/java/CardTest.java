@@ -13,14 +13,14 @@ public class CardTest {
     }
 
     @Test
-    public void createCardTest() {
+    void cardCreateTest() {
         Card sut = new Card(Card.Suit.CLUBS, Card.Rank.TWO);
         assertEquals(Card.Suit.CLUBS, sut.getSuit());
         assertEquals(Card.Rank.TWO, sut.getRank());
     }
 
     @Test
-    void equalsCardTest() {
+    void cardEqualTest() {
         assertTrue(new Card(Card.Suit.CLUBS, Card.Rank.TWO).equals(new Card(Card.Suit.CLUBS, Card.Rank.TWO)));
         assertFalse(new Card(Card.Suit.CLUBS, Card.Rank.TWO).equals(new Card(Card.Suit.CLUBS, Card.Rank.THREE)));
     }

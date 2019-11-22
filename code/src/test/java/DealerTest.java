@@ -27,7 +27,7 @@ public class DealerTest {
     }
 
     @Test
-    void isLoserDealerTest() {
+    void dealerIsLoserTest() {
         player.add(new Card(Card.Suit.CLUBS, Card.Rank.JACK));
         assertFalse(sut.isLoser(player));
         player.add(new Card(Card.Suit.DIAMONDS, Card.Rank.JACK));
@@ -37,7 +37,7 @@ public class DealerTest {
     }
 
     @Test
-    void isWinnerOnScoreDealerTest() {
+    void dealerIsWinnerOnScoreTest() {
         player.add(new Card(Card.Suit.CLUBS, Card.Rank.TEN));
         player.add(new Card(Card.Suit.DIAMONDS, Card.Rank.TEN));
         assertEquals(20, player.getScore()); // Added to better demonstrate the score
@@ -51,7 +51,7 @@ public class DealerTest {
     }
 
     @Test
-    void isWinnerOnSizeDealerTest() {
+    void dealerIsWinnerOnEqualTest() {
         player.add(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
         player.add(new Card(Card.Suit.DIAMONDS, Card.Rank.TWO));
         player.add(new Card(Card.Suit.HEARTS, Card.Rank.TWO));
@@ -62,14 +62,14 @@ public class DealerTest {
     }
 
     @Test
-    void returnWinnerEqualDealerTest() {
+    void dealerReturnWinnerEqualTest() {
         dealer.add(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
         player.add(new Card(Card.Suit.DIAMONDS, Card.Rank.TWO));
         assertEquals(dealer, sut.returnWinner(dealer, player));
     }
 
     @Test
-    void returnWinnerCompareDealerTest() {
+    void dealerReturnWinnerTest() {
         dealer.add(new Card(Card.Suit.CLUBS, Card.Rank.TEN));
         player.add(new Card(Card.Suit.DIAMONDS, Card.Rank.JACK));
         assertEquals(player, sut.returnWinner(dealer, player));
@@ -78,12 +78,15 @@ public class DealerTest {
     }
 
     @Test
-    void returnWinnerBustDealerTest() {
-        dealer.add(new Card(Card.Suit.CLUBS, Card.Rank.JACK));
+    void dealerReturnWinnerBustTest() {
         dealer.add(new Card(Card.Suit.DIAMONDS, Card.Rank.JACK));
-        player.add(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
+        dealer.add(new Card(Card.Suit.HEARTS, Card.Rank.JACK));
+        player.add(new Card(Card.Suit.CLUBS, Card.Rank.JACK));
         assertEquals(22, dealer.getScore());
         assertEquals(player, sut.returnWinner(dealer, player));
+        player.add(new Card(Card.Suit.SPADES, Card.Rank.JACK));
+        assertEquals(22, player.getScore());
+        assertEquals(dealer, sut.returnWinner(dealer, player));
     }
 
 }

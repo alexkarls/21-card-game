@@ -20,7 +20,7 @@ public class Dealer {
     public Player returnWinner(Player dealer, Player player) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
-        if (playerScore > MAX_SCORE) {
+        if (playerScore > MAX_SCORE) { // THIS scenario should not occur (lose before comparison)
             return dealer;
         }
         if (dealerScore > MAX_SCORE) {
