@@ -1,11 +1,18 @@
+import controller.ControllerFactory;
+import controller.GameController;
+import controller.IController;
+import controller.MenuController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ControllerFactoryTest {
+
+    private ControllerFactory sut;
 
     @BeforeEach
     void setup() {
