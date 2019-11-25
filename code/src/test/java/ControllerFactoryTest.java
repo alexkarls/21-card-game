@@ -7,8 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ControllerFactoryTest {
 
@@ -39,5 +40,16 @@ public class ControllerFactoryTest {
         assertThrows(IllegalArgumentException.class, () -> {
             sut.getController(null);
         });
+    }
+
+    // Test that all controllers implement the interface methods (otherwise compile error)
+    @Test
+    void controllerInterfaceTest() {
+        IController mockGameController = mock(GameController.class);
+        IController mockMenuController = mock(MenuController.class);
+        when(mockGameController.run()).thenReturn(true);
+        when(mockMenuController.run()).thenReturn(true);
+        assertTrue(mockGameController.run());
+        assertTrue(mockMenuController.run());
     }
 }
