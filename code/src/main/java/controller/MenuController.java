@@ -22,8 +22,12 @@ public class MenuController implements IController {
             return true;
         }
 
-        if (action.equals(MenuAction.PLAY)) {
-            controllers.getController(ControllerFactory.Controller.GAME).run();
+        switch (action) {
+            case PLAY:
+                controllers.getController(ControllerFactory.Controller.GAME).run();
+                break;
+            case EXIT:
+                return false;
         }
 
         return false;

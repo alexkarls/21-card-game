@@ -40,11 +40,10 @@ public class MenuControllerTest {
     void menuControllerViewDisplayTest() {
         MenuView mockView = mock(MenuView.class);
         when(mockView.getInputAction()).thenReturn(MenuAction.EXIT);
-        String in = Integer.toString(MenuAction.EXIT.ordinal() + INDEX_OFFSET);
-        System.setIn(new ByteArrayInputStream(in.getBytes()));
-        sut = new MenuController(mockControllers, mockView);
+        setSystemInput(Integer.toString(MenuAction.EXIT.ordinal() + INDEX_OFFSET));
+        sut = new MenuController(mockControllers, mockView); // Mock required for times()
         sut.run();
-        // Make sure all methods in MenuView are called...
+        // Make sure all the relevant methods in MenuView are called...
         verify(mockView, times(1)).displayMenu();
         verify(mockView, times(1)).getInputAction();
     }
@@ -52,19 +51,16 @@ public class MenuControllerTest {
 
     @Test
     void menuControllerExitActionTest() {
-        String in = Integer.toString(MenuAction.EXIT.ordinal() + INDEX_OFFSET);
-        System.setIn(new ByteArrayInputStream(in.getBytes()));
+        setSystemInput(Integer.toString(MenuAction.EXIT.ordinal() + INDEX_OFFSET));
         assertFalse(sut.run());
     }
 
     @Test
     void menuControllerPlayActionTest() {
-        String in = Integer.toString(MenuAction.PLAY.ordinal() + INDEX_OFFSET);
-        System.setIn(new ByteArrayInputStream(in.getBytes()));
+        setSystemInput(Integer.toString(MenuAction.PLAY.ordinal() + INDEX_OFFSET));
         sut.run();
         verify(mockGameController, times(1)).run();
-        in = Integer.toString(MenuAction.PLAY.ordinal() + INDEX_OFFSET);
-        System.setIn(new ByteArrayInputStream(in.getBytes()));
+        setSystemInput(Integer.toString(MenuAction.PLAY.ordinal() + INDEX_OFFSET));
         sut.run();
         verify(mockGameController, times(2)).run();
     }
@@ -72,12 +68,15 @@ public class MenuControllerTest {
     // Assumes sut (MenuController) receives null on invalid input
     @Test
     void menuControllerNullMenuActionTest() {
-        int in = MenuAction.values()[MenuAction.values().length - 1].ordinal();
-        in = in +  INDEX_OFFSET + 1;
-        System.setIn(new ByteArrayInputStream(Integer.toString(in).getBytes()));
+        int lastIndex = MenuAction.values()[MenuAction.values().length - 1].ordinal();
+        setSystemInput(Integer.toString(lastIndex + INDEX_OFFSET + 1));
         assertTrue(sut.run());
         // No calls should happen (should be broken into a method once more menu actions are added...)
         verify(mockGameController, times(0)).run();
+    }
+
+    private void setSystemInput(String in) {
+        System.setIn(new ByteArrayInputStream(in.getBytes()));
     }
 
 }

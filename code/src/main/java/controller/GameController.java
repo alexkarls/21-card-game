@@ -1,7 +1,11 @@
 package controller;
 
 public class GameController implements IController {
-    public GameController(Object o, Object o1) {
+
+    private ControllerFactory controllers;
+
+    public GameController(ControllerFactory controllers, Object o1) {
+        this.controllers = controllers;
     }
 
     @Override
