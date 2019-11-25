@@ -32,24 +32,21 @@ public class GameViewTest {
     @Test
     void gameViewGetInputActionTest() {
         for (GameAction action : GameAction.values()) {
-            int in = action.ordinal() + INDEX_OFFSET;
-            System.setIn(new ByteArrayInputStream(Integer.toString(in).getBytes()));
+            setSystemInput(Integer.toString(action.ordinal() + INDEX_OFFSET));
             assertEquals(action, sut.getInputAction());
         }
     }
 
     @Test
     void menuViewGetInputActionReturnNullOnStringTest() {
-        String in = "a";
-        System.setIn(new ByteArrayInputStream(in.getBytes()));
+        setSystemInput("a");
         assertEquals(null, sut.getInputAction());
     }
 
     @Test
     void menuViewGetInputActionReturnNullOnInvalidIntegerTest() {
-        int in = GameAction.values()[GameAction.values().length - 1].ordinal();
-        in = in +  INDEX_OFFSET + 1;
-        System.setIn(new ByteArrayInputStream(Integer.toString(in).getBytes()));
+        int lastIndex = GameAction.values()[GameAction.values().length - 1].ordinal();
+        setSystemInput(Integer.toString(lastIndex + INDEX_OFFSET + 1));
         assertEquals(null, sut.getInputAction());
     }
 
@@ -61,5 +58,9 @@ public class GameViewTest {
             expected = expected + (action.ordinal() + INDEX_OFFSET) + ": " + action + System.lineSeparator();
         }
         assertEquals(expected, out.toString());
+    }
+
+    private void setSystemInput(String in) {
+        System.setIn(new ByteArrayInputStream(in.getBytes()));
     }
 }
