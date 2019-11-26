@@ -1,3 +1,5 @@
+import model.Card;
+import model.Player;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,6 +59,22 @@ public class GameViewTest {
         for (GameAction action : GameAction.values()) {
             expected = expected + (action.ordinal() + INDEX_OFFSET) + ": " + action + System.lineSeparator();
         }
+        assertEquals(expected, out.toString());
+    }
+
+    @Test
+    void menuViewDisplayPlayerTest() {
+        Player player = new Player();
+        player.add(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
+        sut.displayPlayer(player, false);
+        String expected = "";
+        expected = expected + System.lineSeparator();
+        expected = expected + "Player:" + System.lineSeparator();
+        for (Card c : player.getHand()) {
+            expected = expected + c.getRank() + " of " + c.getSuit();
+        }
+        System.out.println("Score: " + player.getScore());
+        expected = expected + System.lineSeparator();
         assertEquals(expected, out.toString());
     }
 
