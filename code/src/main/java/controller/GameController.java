@@ -1,6 +1,9 @@
 package controller;
 
-public class GameController implements IController {
+import model.IRoundObserver;
+import model.Player;
+
+public class GameController implements IController, IRoundObserver {
 
     private ControllerFactory controllers;
 
@@ -11,5 +14,10 @@ public class GameController implements IController {
     @Override
     public boolean run() {
         return true;
+    }
+
+    @Override
+    public void update(Player player) {
+
     }
 }
