@@ -11,6 +11,8 @@ public class Round {
     private final Rule RULE;
     private final Player DEALER;
     private final Player PLAYER;
+    private final int DEALER_STAND_SCORE = 17;
+    private final int MAX_SCORE = 21;
     private List<IRoundObserver> observers;
 
     public Round(Deck deck, Rule rule, Player dealer, Player player) {
@@ -25,15 +27,27 @@ public class Round {
         observers.add(observer);
     }
 
-    public State end() {
-        return State.DEALER_WIN;
-    }
-
-    public State playerTurn() {
-        PLAYER.add(DECK.draw());
+    private void updateObservers() {
         for (IRoundObserver obs : observers) {
             obs.update(PLAYER);
         }
+    }
+
+    public void start() {
+        DECK.shuffle();
+        dealTo(PLAYER);
+        dealTo(PLAYER);
+    }
+
+    public State end() {
+        if (RULE.returnWinner(DEALER, PLAYER) == DEALER) {
+            return State.DEALER_WIN;
+        }
+        return State.PLAYER_WIN;
+    }
+
+    public State playerTurn() {
+        dealTo(PLAYER);
         if (RULE.isLoser(PLAYER)) {
             return State.DEALER_WIN;
         }
@@ -44,20 +58,21 @@ public class Round {
         return State.UNKNOWN;
     }
 
-    public void start() {
-        DECK.shuffle();
-        PLAYER.add(DECK.draw());
-        PLAYER.add(DECK.draw());
+    public State dealerTurn() {
+        dealTo(DEALER);
+        int dealerScore = DEALER.getScore();
+        if (dealerScore < DEALER_STAND_SCORE) {
+            return State.UNKNOWN;
+        }
+        if (dealerScore > MAX_SCORE) {
+            return State.PLAYER_WIN;
+        }
+        return State.DEALER_STAND;
     }
 
-
-    public State dealerTurn() {
-        DEALER.add(DECK.draw());
-        if (DEALER.getScore() < 17)
-            return State.UNKNOWN;
-        if (DEALER.getScore() > 21)
-            return State.PLAYER_WIN;
-        return State.DEALER_STAND;
+    private void dealTo(Player player) {
+        player.add(DECK.draw());
+        updateObservers();
     }
 
     public enum State {PLAYER_WIN, DEALER_WIN, DEALER_STAND, UNKNOWN}

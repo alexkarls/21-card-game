@@ -41,6 +41,26 @@ public class RoundTest {
     }
 
     @Test
+    void roundEndTest() {
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
+        sut.playerTurn();
+        sut.dealerTurn();
+        assertEquals(sut.end(), Round.State.DEALER_WIN);                            // Equal score
+        sut.playerTurn();
+        assertEquals(sut.end(), Round.State.PLAYER_WIN);                            // Player more score (less than 21)
+    }
+
+    @Test
+    void roundDealerTurnTest() {
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TEN));     // Less score than stand
+        assertEquals(Round.State.UNKNOWN, sut.dealerTurn());
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.SEVEN));   // Stand score
+        assertEquals(Round.State.DEALER_STAND, sut.dealerTurn());
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.FIVE));    // More than 21
+        assertEquals(Round.State.PLAYER_WIN, sut.dealerTurn());
+    }
+
+    @Test
     void roundPlayerTurnWinSizeTest() {
         when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
         for (int i = 0; i < 4; i++) {                                                   // 4 cards less than 21
@@ -63,25 +83,6 @@ public class RoundTest {
         assertEquals(Round.State.UNKNOWN, sut.playerTurn());                            // Less than 21
         assertEquals(Round.State.DEALER_WIN, sut.playerTurn());                         // More than 21
     }
-
-    @Test
-    void roundEndTest() {
-        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
-        sut.playerTurn();
-        sut.dealerTurn();
-        assertEquals(sut.end(), Round.State.DEALER_WIN);
-    }
-
-    @Test
-    void roundDealerTurnTest() {
-        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TEN));
-        assertEquals(Round.State.UNKNOWN, sut.dealerTurn());
-        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.SEVEN));
-        assertEquals(Round.State.DEALER_STAND, sut.dealerTurn());
-        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.FIVE));
-        assertEquals(Round.State.PLAYER_WIN, sut.dealerTurn());
-    }
-
 
     @Test
     void roundSubscribeTest() {
