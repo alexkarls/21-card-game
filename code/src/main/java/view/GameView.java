@@ -1,5 +1,8 @@
 package view;
 
+import model.Card;
+import model.Player;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -26,6 +29,23 @@ public class GameView {
         for (GameAction action : GameAction.values()) {
             System.out.println(action.ordinal() + INDEX_OFFSET + ": " + action.toString());
         }
+    }
+
+    public void displayPlayer(Player player, boolean isDealer) {
+        System.out.println();
+        if (isDealer) {
+            System.out.println("Dealer:");
+        } else {
+            System.out.println("Player:");
+        }
+        for (Card c : player.getHand()) {
+            displayCard(c);
+        }
+        System.out.println("Score: " + player.getScore());
+    }
+
+    private void displayCard(Card c) {
+        System.out.println(c.getRank() + " of " + c.getSuit());
     }
 
 }

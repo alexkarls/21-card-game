@@ -71,9 +71,9 @@ public class GameViewTest {
         expected = expected + System.lineSeparator();
         expected = expected + "Player:" + System.lineSeparator();
         for (Card c : player.getHand()) {
-            expected = expected + c.getRank() + " of " + c.getSuit();
+            expected = expected + c.getRank() + " of " + c.getSuit() + System.lineSeparator();
         }
-        System.out.println("Score: " + player.getScore());
+        expected = expected + ("Score: " + player.getScore());
         expected = expected + System.lineSeparator();
         assertEquals(expected, out.toString());
     }

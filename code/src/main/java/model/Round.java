@@ -75,5 +75,7 @@ public class Round {
         updateObservers();
     }
 
-    public enum State {PLAYER_WIN, DEALER_WIN, DEALER_STAND, UNKNOWN}
+    public enum State {
+        PLAYER_WIN, DEALER_WIN, DEALER_STAND, UNKNOWN, EXIT
+    }
 }

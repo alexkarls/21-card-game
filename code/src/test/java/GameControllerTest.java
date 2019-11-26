@@ -4,7 +4,6 @@ import model.Player;
 import model.Round;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.GameAction;
 import view.GameView;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,11 +28,11 @@ public class GameControllerTest {
 
     @Test
     void gameControllerRunTest() {
-        when(sut.play(mockRound)).thenReturn(Round.State.DEALER_WIN);
+        when(mockRound.playerTurn()).thenReturn(Round.State.DEALER_WIN);
         assertTrue(sut.run());
-        when(sut.play(mockRound)).thenReturn(Round.State.PLAYER_WIN);
+        when(mockRound.playerTurn()).thenReturn(Round.State.PLAYER_WIN);
         assertTrue(sut.run());
-        when(sut.play(mockRound)).thenReturn(Round.State.EXIT);
+        when(mockRound.playerTurn()).thenReturn(Round.State.EXIT);
         assertFalse(sut.run());
     }
 
