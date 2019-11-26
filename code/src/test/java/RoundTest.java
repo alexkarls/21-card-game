@@ -1,3 +1,4 @@
+import controller.GameController;
 import model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,5 +62,33 @@ public class RoundTest {
         when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.JACK));
         assertEquals(Round.State.UNKNOWN, sut.playerTurn());                            // Less than 21
         assertEquals(Round.State.DEALER_WIN, sut.playerTurn());                         // More than 21
+    }
+
+    @Test
+    void roundEndTest() {
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
+        sut.playerTurn();
+        sut.dealerTurn();
+        assertEquals(sut.end(), Round.State.DEALER_WIN);
+    }
+
+    @Test
+    void roundDealerTurnTest() {
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TEN));
+        assertEquals(Round.State.UNKNOWN, sut.dealerTurn());
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.SEVEN));
+        assertEquals(Round.State.DEALER_STAND, sut.dealerTurn());
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.FIVE));
+        assertEquals(Round.State.PLAYER_WIN, sut.dealerTurn());
+    }
+
+
+    @Test
+    void roundSubscribeTest() {
+        GameController observer = mock(GameController.class);
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
+        sut.subscribe(observer);
+        sut.playerTurn();
+        verify(observer, times(1)).update(player);
     }
 }
