@@ -3,11 +3,11 @@ package model;
 public class Round {
 
     private final Deck DECK;
-    private final Dealer RULE;
+    private final Rule RULE;
     private final Player DEALER;
     private final Player PLAYER;
 
-    public Round(Deck deck, Dealer rule, Player dealer, Player player) {
+    public Round(Deck deck, Rule rule, Player dealer, Player player) {
         DECK = deck;
         RULE = rule;
         DEALER = dealer;
@@ -16,14 +16,18 @@ public class Round {
 
     public State playerTurn() {
         PLAYER.add(DECK.draw());
-        if (RULE.isLoser(PLAYER))
+        if (RULE.isLoser(PLAYER)) {
             return State.DEALER_WIN;
-        if (RULE.isWinner(PLAYER))
+        }
+
+        if (RULE.isWinner(PLAYER)) {
             return State.PLAYER_WIN;
+        }
         return State.UNKNOWN;
     }
 
     public void start() {
+        DECK.shuffle();
         PLAYER.add(DECK.draw());
         PLAYER.add(DECK.draw());
     }

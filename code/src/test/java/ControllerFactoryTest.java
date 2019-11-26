@@ -42,11 +42,14 @@ public class ControllerFactoryTest {
         });
     }
 
-    // Test that all controllers implement the interface methods (otherwise compile error)
     @Test
     void controllerInterfaceTest() {
-        IController mockGameController = mock(GameController.class);
-        IController mockMenuController = mock(MenuController.class);
+        // Test that all controllers implement the interface method(s)...
+        sut = mock(ControllerFactory.class);
+        when(sut.getController(ControllerFactory.Controller.GAME)).thenReturn(mock(GameController.class));
+        when(sut.getController(ControllerFactory.Controller.MENU)).thenReturn(mock(MenuController.class));
+        GameController mockGameController = (GameController) sut.getController(ControllerFactory.Controller.GAME);
+        MenuController mockMenuController = (MenuController) sut.getController(ControllerFactory.Controller.MENU);
         when(mockGameController.run()).thenReturn(true);
         when(mockMenuController.run()).thenReturn(true);
         assertTrue(mockGameController.run());

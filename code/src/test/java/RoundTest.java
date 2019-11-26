@@ -11,7 +11,7 @@ import static org.mockito.Mockito.times;
 public class RoundTest {
 
     private Round sut;
-    private Dealer rules;
+    private Rule rules;
     private Deck mockDeck;
     private Player dealer;
     private Player player;
@@ -20,7 +20,7 @@ public class RoundTest {
 
     void setup() {
         mockDeck = mock(Deck.class);
-        rules = new Dealer();
+        rules = new Rule();
         dealer = new Player();
         player = new Player();
         sut = new Round(mockDeck, rules, dealer, player);
@@ -35,31 +35,31 @@ public class RoundTest {
     void roundStartTest() {
         sut.start();
         int startHandSize = 2;
+        assertEquals(startHandSize, player.size());
         verify(mockDeck, times(startHandSize)).draw();
     }
 
     @Test
     void roundPlayerTurnWinSizeTest() {
         when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
-        assertEquals(Round.State.UNKNOWN, sut.playerTurn());
-        assertEquals(Round.State.UNKNOWN, sut.playerTurn());
-        assertEquals(Round.State.UNKNOWN, sut.playerTurn());
-        assertEquals(Round.State.UNKNOWN, sut.playerTurn());
-        assertEquals(Round.State.PLAYER_WIN, sut.playerTurn());
+        for (int i = 0; i < 4; i++) {                                                   // 4 cards less than 21
+            assertEquals(Round.State.UNKNOWN, sut.playerTurn());
+        }
+        assertEquals(Round.State.PLAYER_WIN, sut.playerTurn());                         // 5 cards less than 21
     }
 
     @Test
     void roundPlayerTurnWinScoreTest() {
         when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TEN));
-        assertEquals(Round.State.UNKNOWN, sut.playerTurn());
+        assertEquals(Round.State.UNKNOWN, sut.playerTurn());                            // Less than 21
         when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.JACK));
-        assertEquals(Round.State.PLAYER_WIN, sut.playerTurn());
+        assertEquals(Round.State.PLAYER_WIN, sut.playerTurn());                         // 21
     }
 
     @Test
     void roundPlayerTurnLoseTest() {
         when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.JACK));
-        assertEquals(Round.State.UNKNOWN, sut.playerTurn());
-        assertEquals(Round.State.DEALER_WIN, sut.playerTurn());
+        assertEquals(Round.State.UNKNOWN, sut.playerTurn());                            // Less than 21
+        assertEquals(Round.State.DEALER_WIN, sut.playerTurn());                         // More than 21
     }
 }

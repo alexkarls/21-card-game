@@ -10,6 +10,6 @@ public class GameController implements IController {
 
     @Override
     public boolean run() {
-        return false;
+        return true;
     }
 }

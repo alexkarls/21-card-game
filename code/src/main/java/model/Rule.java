@@ -1,6 +1,6 @@
 package model;
 
-public class Dealer {
+public class Rule {
 
     private final int MAX_HAND = 5;
     private final int MAX_SCORE = 21;
