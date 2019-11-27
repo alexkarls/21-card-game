@@ -40,20 +40,20 @@ public class GameViewTest {
     }
 
     @Test
-    void menuViewGetInputActionReturnNullOnStringTest() {
+    void gameViewGetInputActionReturnNullOnStringTest() {
         setSystemInput("a");
         assertEquals(null, sut.getInputAction());
     }
 
     @Test
-    void menuViewGetInputActionReturnNullOnInvalidIntegerTest() {
+    void gameViewGetInputActionReturnNullOnInvalidIntegerTest() {
         int lastIndex = GameAction.values()[GameAction.values().length - 1].ordinal();
         setSystemInput(Integer.toString(lastIndex + INDEX_OFFSET + 1));
         assertEquals(null, sut.getInputAction());
     }
 
     @Test
-    void menuViewDisplayGameTest() {
+    void gameViewDisplayGameTest() {
         sut.displayGame();
         String expected = "";
         for (GameAction action : GameAction.values()) {
@@ -63,7 +63,7 @@ public class GameViewTest {
     }
 
     @Test
-    void menuViewDisplayPlayerTest() {
+    void gameViewDisplayPlayerTest() {
         Player player = new Player();
         player.add(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
         sut.displayPlayer(player, false);

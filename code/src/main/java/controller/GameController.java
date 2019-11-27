@@ -10,6 +10,7 @@ public class GameController implements IController, IRoundObserver {
     private ControllerFactory controllers;
     private GameView view;
     private Round round;
+    private boolean isDealerTurn = false;
 
     public GameController(ControllerFactory controllers, GameView view) {
         this.controllers = controllers;
@@ -23,11 +24,17 @@ public class GameController implements IController, IRoundObserver {
     @Override
     public boolean run() {
         Round.State result = play(round);
-        System.out.println(result);
-        if (result.equals(Round.State.EXIT)) {
-            return false;
+        switch (result) {
+            case EXIT:
+                return false;
+            case DEALER_WIN:
+                System.out.println("Dealer wins...");
+                return true;
+            case PLAYER_WIN:
+                System.out.println("Player wins...");
+                return true;
         }
-        return true;
+        return false;
     }
 
     public Round.State play(Round round) {
@@ -36,6 +43,6 @@ public class GameController implements IController, IRoundObserver {
 
     @Override
     public void update(Player player) {
-
+        view.displayPlayer(player, isDealerTurn);
     }
 }
