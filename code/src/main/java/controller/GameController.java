@@ -3,6 +3,7 @@ package controller;
 import model.IRoundObserver;
 import model.Player;
 import model.Round;
+import view.GameAction;
 import view.GameView;
 
 public class GameController implements IController, IRoundObserver {
@@ -38,7 +39,30 @@ public class GameController implements IController, IRoundObserver {
     }
 
     public Round.State play(Round round) {
-        return round.playerTurn();
+        round.start();
+
+        view.displayGame();
+        GameAction action = view.getInputAction();
+        Round.State state = Round.State.UNKNOWN;
+
+        while (action == GameAction.HIT && state == Round.State.UNKNOWN) {
+            state = round.playerTurn();
+        }
+
+        if (state != Round.State.UNKNOWN) {
+            return state;
+        }
+
+        while (state == Round.State.UNKNOWN) {
+            state = round.dealerTurn();
+        }
+
+        if (state != Round.State.DEALER_STAND) {
+            return state;
+        }
+
+
+        return round.end();
     }
 
     @Override

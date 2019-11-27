@@ -33,6 +33,14 @@ public class Round {
         }
     }
 
+    public Player getDealer() {
+        return DEALER;
+    }
+
+    public Player getPlayer() {
+        return PLAYER;
+    }
+
     public void start() {
         DECK.shuffle();
         dealTo(PLAYER);

@@ -29,6 +29,7 @@ public class GameControllerTest {
 
     @Test
     void gameControllerRunTest() {
+        when(mockView.getInputAction()).thenReturn(GameAction.HIT);
         when(mockRound.playerTurn()).thenReturn(Round.State.DEALER_WIN);
         assertTrue(sut.run());
         when(mockRound.playerTurn()).thenReturn(Round.State.PLAYER_WIN);

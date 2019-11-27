@@ -91,7 +91,7 @@ public class RoundTest {
 
     @Test
     void roundGetPlayerTest() {
-        assertEquals(sut.getPlayer(), dealer);
+        assertEquals(sut.getPlayer(), player);
     }
 
     @Test
