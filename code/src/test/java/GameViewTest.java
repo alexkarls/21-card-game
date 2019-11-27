@@ -56,9 +56,11 @@ public class GameViewTest {
     void gameViewDisplayGameTest() {
         sut.displayGame();
         String expected = "";
+        expected = expected + System.lineSeparator();
         for (GameAction action : GameAction.values()) {
             expected = expected + (action.ordinal() + INDEX_OFFSET) + ": " + action + System.lineSeparator();
         }
+        expected = expected + System.lineSeparator();
         assertEquals(expected, out.toString());
     }
 
@@ -76,6 +78,25 @@ public class GameViewTest {
         expected = expected + ("Score: " + player.getScore());
         expected = expected + System.lineSeparator();
         assertEquals(expected, out.toString());
+    }
+
+    @Test
+    void displayWinnerTest() {
+        sut.displayWinner(true);
+        String expected = "";
+        expected = expected + System.lineSeparator();
+        expected = expected + "DEALER WINS";
+        expected = expected + System.lineSeparator();
+        assertEquals(expected, out.toString());
+        out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+        sut.displayWinner(false);
+        expected = "";
+        expected = expected + System.lineSeparator();
+        expected = expected + "PLAYER WINS";
+        expected = expected + System.lineSeparator();
+        assertEquals(expected, out.toString());
+
     }
 
     private void setSystemInput(String in) {
