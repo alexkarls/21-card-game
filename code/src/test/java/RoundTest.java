@@ -85,6 +85,16 @@ public class RoundTest {
     }
 
     @Test
+    void roundGetDealerTest() {
+        assertEquals(sut.getDealer(), dealer);
+    }
+
+    @Test
+    void roundGetPlayerTest() {
+        assertEquals(sut.getPlayer(), dealer);
+    }
+
+    @Test
     void roundSubscribeTest() {
         GameController observer = mock(GameController.class);
         when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
