@@ -11,7 +11,6 @@ public class GameController implements IController, IRoundObserver {
     private ControllerFactory controllers;
     private GameView view;
     private Round round;
-    private boolean isDealerTurn = false;
 
     public GameController(ControllerFactory controllers, GameView view) {
         this.controllers = controllers;
@@ -20,6 +19,7 @@ public class GameController implements IController, IRoundObserver {
 
     public void set(Round round) {
         this.round = round;
+        this.round.subscribe(this);
     }
 
     @Override
@@ -29,28 +29,35 @@ public class GameController implements IController, IRoundObserver {
             case EXIT:
                 return false;
             case DEALER_WIN:
-                System.out.println("Dealer wins...");
+                view.displayPlayer(round.getDealer(), true);
                 return true;
             case PLAYER_WIN:
-                System.out.println("Player wins...");
+                view.displayPlayer(round.getPlayer(), false);
                 return true;
         }
         return false;
     }
 
+    private GameAction getAction() {
+        view.displayGame();
+        return view.getInputAction();
+    }
+
     public Round.State play(Round round) {
         round.start();
-
-        view.displayGame();
-        GameAction action = view.getInputAction();
+        GameAction action = getAction();
         Round.State state = Round.State.UNKNOWN;
 
-        while (action == GameAction.HIT && state == Round.State.UNKNOWN) {
+        while (action == GameAction.HIT) {
             state = round.playerTurn();
+            if (state != Round.State.UNKNOWN) {
+                return state;
+            }
+            action = getAction();
         }
 
-        if (state != Round.State.UNKNOWN) {
-            return state;
+        if (action == GameAction.EXIT) {
+            return Round.State.EXIT;
         }
 
         while (state == Round.State.UNKNOWN) {
@@ -61,12 +68,15 @@ public class GameController implements IController, IRoundObserver {
             return state;
         }
 
-
         return round.end();
     }
 
     @Override
     public void update(Player player) {
-        view.displayPlayer(player, isDealerTurn);
+        if (player.equals(round.getDealer())) {
+            view.displayPlayer(player, true);
+        } else {
+            view.displayPlayer(player, false);
+        }
     }
 }

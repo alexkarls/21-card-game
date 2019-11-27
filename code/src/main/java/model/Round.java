@@ -27,9 +27,9 @@ public class Round {
         observers.add(observer);
     }
 
-    private void updateObservers() {
+    private void updateObservers(Player player) {
         for (IRoundObserver obs : observers) {
-            obs.update(PLAYER);
+            obs.update(player);
         }
     }
 
@@ -59,7 +59,6 @@ public class Round {
         if (RULE.isLoser(PLAYER)) {
             return State.DEALER_WIN;
         }
-
         if (RULE.isWinner(PLAYER)) {
             return State.PLAYER_WIN;
         }
@@ -80,7 +79,7 @@ public class Round {
 
     private void dealTo(Player player) {
         player.add(DECK.draw());
-        updateObservers();
+        updateObservers(player);
     }
 
     public enum State {

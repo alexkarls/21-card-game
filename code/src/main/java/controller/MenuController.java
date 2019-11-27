@@ -1,7 +1,13 @@
 package controller;
 
+import model.Deck;
+import model.Player;
+import model.Round;
+import model.Rule;
 import view.MenuAction;
 import view.MenuView;
+
+import java.util.Random;
 
 public class MenuController implements IController {
 
@@ -24,7 +30,9 @@ public class MenuController implements IController {
 
         switch (action) {
             case PLAY:
-                controllers.getController(ControllerFactory.Controller.GAME).run();
+                GameController gameController = (GameController) controllers.getController(ControllerFactory.Controller.GAME);
+                gameController.set(new Round(new Deck(new Random()), new Rule(), new Player(), new Player()));
+                gameController.run();
                 break;
             case EXIT:
                 return false;

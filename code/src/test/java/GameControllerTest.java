@@ -34,7 +34,7 @@ public class GameControllerTest {
         assertTrue(sut.run());
         when(mockRound.playerTurn()).thenReturn(Round.State.PLAYER_WIN);
         assertTrue(sut.run());
-        when(mockRound.playerTurn()).thenReturn(Round.State.EXIT);
+        when(mockView.getInputAction()).thenReturn(GameAction.EXIT);
         assertFalse(sut.run());
     }
 
@@ -61,8 +61,6 @@ public class GameControllerTest {
 
     @Test
     void gameControllerPlayerVersusDealerTest() {
-        when(mockView.getInputAction()).thenReturn(GameAction.STAND);
-        when(mockRound.playerTurn()).thenReturn(Round.State.PLAYER_WIN);
         when(mockRound.dealerTurn()).thenReturn(Round.State.DEALER_STAND);      // Dealer must stand to reach end()
         when(mockRound.end()).thenReturn(Round.State.DEALER_WIN);
         assertEquals(Round.State.DEALER_WIN, sut.play(mockRound));
@@ -71,9 +69,7 @@ public class GameControllerTest {
     @Test
     void gameControllerRunShouldRThrowException() {
         when(mockRound.playerTurn()).thenReturn(null);
-        assertThrows(RuntimeException.class, () -> {
-            sut.run();
-        });
+        assertThrows(RuntimeException.class, () -> sut.run());
     }
 
     @Test
