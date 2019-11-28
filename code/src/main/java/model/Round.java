@@ -41,10 +41,11 @@ public class Round {
         return PLAYER;
     }
 
-    public void start() {
+    public State start() {
         DECK.shuffle();
         dealTo(PLAYER);
         dealTo(PLAYER);
+        return playerState();
     }
 
     public State end() {
@@ -54,19 +55,20 @@ public class Round {
         return State.PLAYER_WIN;
     }
 
-    public State playerTurn() {
-        dealTo(PLAYER);
-        if (RULE.isLoser(PLAYER)) {
-            return State.DEALER_WIN;
-        }
-        if (RULE.isWinner(PLAYER)) {
-            return State.PLAYER_WIN;
-        }
-        return State.UNKNOWN;
-    }
-
     public State dealerTurn() {
         dealTo(DEALER);
+        return dealerState();
+    }
+
+    public State playerTurn() {
+        if (playerState() != State.UNKNOWN) {
+            return playerState();
+        }
+        dealTo(PLAYER);
+        return playerState();
+    }
+
+    private State dealerState() {
         int dealerScore = DEALER.getScore();
         if (dealerScore < DEALER_STAND_SCORE) {
             return State.UNKNOWN;
@@ -75,6 +77,16 @@ public class Round {
             return State.PLAYER_WIN;
         }
         return State.DEALER_STAND;
+    }
+
+    private State playerState() {
+        if (RULE.isLoser(PLAYER)) {
+            return State.DEALER_WIN;
+        }
+        if (RULE.isWinner(PLAYER)) {
+            return State.PLAYER_WIN;
+        }
+        return State.UNKNOWN;
     }
 
     private void dealTo(Player player) {

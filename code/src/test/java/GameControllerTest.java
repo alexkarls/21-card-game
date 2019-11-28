@@ -29,12 +29,11 @@ public class GameControllerTest {
 
     @Test
     void gameControllerRunTest() {
-        when(mockView.getInputAction()).thenReturn(GameAction.HIT);
-        when(mockRound.playerTurn()).thenReturn(Round.State.DEALER_WIN);
+        when(mockRound.start()).thenReturn(Round.State.DEALER_WIN);
         assertTrue(sut.run());
-        when(mockRound.playerTurn()).thenReturn(Round.State.PLAYER_WIN);
+        when(mockRound.start()).thenReturn(Round.State.PLAYER_WIN);
         assertTrue(sut.run());
-        when(mockView.getInputAction()).thenReturn(GameAction.EXIT);
+        when(mockRound.start()).thenReturn(Round.State.EXIT);
         assertFalse(sut.run());
     }
 
@@ -55,12 +54,15 @@ public class GameControllerTest {
     @Test
     void gameControllerRunDealerLostTest() {
         when(mockView.getInputAction()).thenReturn(GameAction.STAND);           // Player must STAND to reach automated dealerTurn()
+        when(mockRound.start()).thenReturn(Round.State.UNKNOWN);
         when(mockRound.dealerTurn()).thenReturn(Round.State.PLAYER_WIN);        // Should return immediately
         assertEquals(Round.State.PLAYER_WIN, sut.play(mockRound));
     }
 
     @Test
     void gameControllerPlayerVersusDealerTest() {
+        when(mockView.getInputAction()).thenReturn(GameAction.STAND);
+        when(mockRound.start()).thenReturn(Round.State.UNKNOWN);
         when(mockRound.dealerTurn()).thenReturn(Round.State.DEALER_STAND);      // Dealer must stand to reach end()
         when(mockRound.end()).thenReturn(Round.State.DEALER_WIN);
         assertEquals(Round.State.DEALER_WIN, sut.play(mockRound));

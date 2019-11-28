@@ -34,8 +34,14 @@ public class RoundTest {
 
     @Test
     void roundStartTest() {
-        sut.start();
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.TWO));
         int startHandSize = 2;
+        assertEquals(sut.start(), Round.State.UNKNOWN);
+        assertEquals(startHandSize, player.size());
+        verify(mockDeck, times(startHandSize)).draw();
+        setup();
+        when(mockDeck.draw()).thenReturn(new Card(Card.Suit.CLUBS, Card.Rank.JACK));
+        assertEquals(sut.start(), Round.State.DEALER_WIN);
         assertEquals(startHandSize, player.size());
         verify(mockDeck, times(startHandSize)).draw();
     }

@@ -26,9 +26,11 @@ public class GameView {
     }
 
     public void displayGame() {
+        System.out.println();
         for (GameAction action : GameAction.values()) {
             System.out.println(action.ordinal() + INDEX_OFFSET + ": " + action.toString());
         }
+        System.out.println();
     }
 
     public void displayPlayer(Player player, boolean isDealer) {
@@ -48,4 +50,13 @@ public class GameView {
         System.out.println(c.getRank() + " of " + c.getSuit());
     }
 
+    public void displayWinner(boolean isDealer) {
+        System.out.println();
+        if (isDealer) {
+            System.out.println("DEALER WINS");
+        } else {
+            System.out.println("PLAYER WINS");
+        }
+        System.out.println();
+    }
 }

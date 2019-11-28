@@ -29,10 +29,10 @@ public class GameController implements IController, IRoundObserver {
             case EXIT:
                 return false;
             case DEALER_WIN:
-                view.displayPlayer(round.getDealer(), true);
+                view.displayWinner(true);
                 return true;
             case PLAYER_WIN:
-                view.displayPlayer(round.getPlayer(), false);
+                view.displayWinner(false);
                 return true;
         }
         return false;
@@ -44,10 +44,12 @@ public class GameController implements IController, IRoundObserver {
     }
 
     public Round.State play(Round round) {
-        round.start();
-        GameAction action = getAction();
-        Round.State state = Round.State.UNKNOWN;
+        Round.State state = round.start();
+        if (state == Round.State.PLAYER_WIN || state == Round.State.DEALER_WIN) {
+            return state;
+        }
 
+        GameAction action = getAction();
         while (action == GameAction.HIT) {
             state = round.playerTurn();
             if (state != Round.State.UNKNOWN) {

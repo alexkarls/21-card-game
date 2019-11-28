@@ -81,11 +81,12 @@ public class GameViewTest {
     }
 
     @Test
-    void displayWinnerTest() {
+    void gameViewDisplayWinnerTest() {
         sut.displayWinner(true);
         String expected = "";
         expected = expected + System.lineSeparator();
         expected = expected + "DEALER WINS";
+        expected = expected + System.lineSeparator();
         expected = expected + System.lineSeparator();
         assertEquals(expected, out.toString());
         out = new ByteArrayOutputStream();
@@ -94,6 +95,7 @@ public class GameViewTest {
         expected = "";
         expected = expected + System.lineSeparator();
         expected = expected + "PLAYER WINS";
+        expected = expected + System.lineSeparator();
         expected = expected + System.lineSeparator();
         assertEquals(expected, out.toString());
 

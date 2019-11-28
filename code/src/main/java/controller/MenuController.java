@@ -38,6 +38,6 @@ public class MenuController implements IController {
                 return false;
         }
 
-        return false;
+        return true;
     }
 }
